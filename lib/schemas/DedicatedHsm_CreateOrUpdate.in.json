@@ -1,0 +1,189 @@
+{
+    "type": "object",
+    "properties": {
+        "resourceGroupName": {
+            "required": true,
+            "type": "string"
+        },
+        "name": {
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$"
+        },
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Dedicated HSM resource",
+                    "properties": {
+                        "id": {
+                            "description": "The Azure Resource Manager resource ID for the dedicated HSM.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "location": {
+                            "description": "The supported Azure location where the dedicated HSM should be created.",
+                            "type": "string"
+                        },
+                        "name": {
+                            "description": "The name of the dedicated HSM.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "sku": {
+                            "description": "SKU details",
+                            "properties": {
+                                "name": {
+                                    "description": "SKU of the dedicated HSM",
+                                    "enum": [
+                                        "SafeNet Luna Network HSM A790"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "tags": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Resource tags",
+                            "type": "object"
+                        },
+                        "type": {
+                            "description": "The resource type of the dedicated HSM.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "zones": {
+                            "description": "The Dedicated Hsm zones.",
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "required": [
+                        "location"
+                    ],
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "Resource information with extended details.",
+            "properties": {
+                "properties": {
+                    "description": "Properties of the dedicated HSM",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "networkProfile": {
+                            "description": "Specifies the network interfaces of the dedicated hsm.",
+                            "properties": {
+                                "networkInterfaces": {
+                                    "description": "Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM.",
+                                    "items": {
+                                        "description": "The network interface definition.",
+                                        "properties": {
+                                            "id": {
+                                                "description": "The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            },
+                                            "privateIpAddress": {
+                                                "description": "Private Ip address of the interface",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "subnet": {
+                                    "description": "Specifies the identifier of the subnet.",
+                                    "properties": {
+                                        "id": {
+                                            "description": "The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "provisioningState": {
+                            "description": "Provisioning state.",
+                            "enum": [
+                                "Succeeded",
+                                "Provisioning",
+                                "Allocating",
+                                "Connecting",
+                                "Failed",
+                                "CheckingQuota",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "JsonWebKeyType",
+                                "values": [
+                                    {
+                                        "description": "The dedicated HSM has been full provisioned.",
+                                        "value": "Succeeded"
+                                    },
+                                    {
+                                        "description": "The dedicated HSM is currently being provisioned.",
+                                        "value": "Provisioning"
+                                    },
+                                    {
+                                        "description": "A device is currently being allocated for the dedicated HSM resource.",
+                                        "value": "Allocating"
+                                    },
+                                    {
+                                        "description": "The dedicated HSM is being connected to the virtual network.",
+                                        "value": "Connecting"
+                                    },
+                                    {
+                                        "description": "Provisioning of the dedicated HSM has failed.",
+                                        "value": "Failed"
+                                    },
+                                    {
+                                        "description": "Validating the subscription has sufficient quota to allocate a dedicated HSM device.",
+                                        "value": "CheckingQuota"
+                                    },
+                                    {
+                                        "description": "The dedicated HSM is currently being deleted.",
+                                        "value": "Deleting"
+                                    }
+                                ]
+                            }
+                        },
+                        "stampId": {
+                            "description": "This field will be used when RP does not support Availability zones.",
+                            "type": "string"
+                        },
+                        "statusMessage": {
+                            "description": "Resource Status Message.",
+                            "readOnly": true,
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "location",
+                "sku",
+                "properties"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}
